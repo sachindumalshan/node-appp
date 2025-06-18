@@ -1,3 +1,0 @@
-Hello, this is a Node.js application without Express!
-Developer:Sachindu Malshan
-Webhook:test-completed

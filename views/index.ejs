@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEO Content Optimizer - AI Powered Tool</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-search"></i> SEO Content Optimizer</h1>
+            <p>Transform your rough content into SEO-friendly, optimized descriptions using AI</p>
+        </header>
+
+        <main class="main-content">
+            <div class="input-section">
+                <h2><i class="fas fa-edit"></i> Input Your Content</h2>
+                <form id="seoForm" method="POST" action="/optimize">
+                    <div class="form-group">
+                        <label for="roughDescription">Rough Description:</label>
+                        <textarea 
+                            id="roughDescription" 
+                            name="roughDescription" 
+                            placeholder="Enter your rough content description here. For example: 'We sell organic coffee beans from local farmers. Our coffee is fresh and sustainable. We deliver nationwide.'"
+                            required
+                        ><%= result ? '' : '' %></textarea>
+                    </div>
+                    <button type="submit" id="optimizeBtn" class="btn-primary">
+                        <i class="fas fa-magic"></i> Optimize Content
+                    </button>
+                </form>
+            </div>
+
+            <div id="loadingSection" class="loading-section" style="display: none;">
+                <div class="loading-spinner">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Optimizing your content with AI...</p>
+                </div>
+            </div>
+
+            <% if (error) { %>
+                <div class="error-section">
+                    <div class="alert alert-error">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <%= error %>
+                    </div>
+                </div>
+            <% } %>
+
+            <% if (result) { %>
+                <div class="results-section">
+                    <h2><i class="fas fa-check-circle"></i> Optimized Results</h2>
+                    
+                    <div class="result-card">
+                        <h3><i class="fas fa-heading"></i> SEO Title</h3>
+                        <div class="result-content">
+                            <p><%= result.title %></p>
+                            <button class="copy-btn" onclick="copyToClipboard('<%= result.title %>')">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="result-card">
+                        <h3><i class="fas fa-file-alt"></i> Meta Description</h3>
+                        <div class="result-content">
+                            <p><%= result.metaDescription %></p>
+                            <small class="char-count">Characters: <%= result.metaDescription.length %>/160</small>
+                            <button class="copy-btn" onclick="copyToClipboard('<%= result.metaDescription %>')">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="result-card">
+                        <h3><i class="fas fa-tags"></i> Keywords</h3>
+                        <div class="result-content">
+                            <p><%= result.keywords %></p>
+                            <button class="copy-btn" onclick="copyToClipboard('<%= result.keywords %>')">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="result-card">
+                        <h3><i class="fas fa-paragraph"></i> Optimized Content</h3>
+                        <div class="result-content">
+                            <p><%= result.optimizedContent %></p>
+                            <button class="copy-btn" onclick="copyToClipboard('<%= result.optimizedContent %>')">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="result-card">
+                        <h3><i class="fas fa-lightbulb"></i> SEO Suggestions</h3>
+                        <div class="suggestions-list">
+                            <% result.suggestions.forEach(suggestion => { %>
+                                <div class="suggestion-item">
+                                    <i class="fas fa-check"></i>
+                                    <span><%= suggestion %></span>
+                                </div>
+                            <% }); %>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button onclick="location.reload()" class="btn-secondary">
+                            <i class="fas fa-redo"></i> Optimize Another
+                        </button>
+                        <button onclick="downloadResults()" class="btn-primary">
+                            <i class="fas fa-download"></i> Download Results
+                        </button>
+                    </div>
+                </div>
+            <% } %>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2025 SEO Content Optimizer | Designed by Sachindu Malshan</p>
+        </footer>
+    </div>
+
+    <div id="copyNotification" class="copy-notification">
+        <i class="fas fa-check"></i> Copied to clipboard!
+    </div>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>
