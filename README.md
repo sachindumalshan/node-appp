@@ -223,4 +223,4 @@ For issues and questions:
 - Basic SEO optimization
 - Responsive design
 - Copy/download functionality
-- Docker support
+- Docker support.
